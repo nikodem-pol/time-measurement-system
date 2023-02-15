@@ -1,0 +1,6 @@
+[submodule "stopwatch_module/lib/RF24"]
+	path = stopwatch_module/lib/RF24
+	url = https://github.com/nRF24/RF24.git
+[submodule "stopwatch_module/lib/pi-pico-LCD"]
+	path = stopwatch_module/lib/pi-pico-LCD
+	url = https://github.com/martinkooij/pi-pico-LCD.git

@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Build directories
+/stopwatch_module/build
+/finish_line_module/build

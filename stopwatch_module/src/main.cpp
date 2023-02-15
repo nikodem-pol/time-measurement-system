@@ -16,7 +16,7 @@
 #define PIN7 8
 #define RS_PIN 13
 #define E_PIN 12
-#define REFRESHE_TIME_MS 200 // ms
+#define REFRESH_TIME_MS 200 // ms
 
 // Buttons pins
 #define START_BTN 4
@@ -132,7 +132,7 @@ int main()
             else
             {
                 auto currentTimestampMs = to_ms_since_boot(get_absolute_time());
-                bool refresh = (currentTimestampMs - lastDisplayRefreshTimeMs) > REFRESHE_TIME_MS;
+                bool refresh = (currentTimestampMs - lastDisplayRefreshTimeMs) > REFRESH_TIME_MS;
 
                 if (refresh)
                 {

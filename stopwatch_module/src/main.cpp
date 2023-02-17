@@ -25,7 +25,7 @@
 
 namespace Stopwatch
 {
-    enum State : uint
+    enum State : uint8_t
     {
         waiting_for_start = 0,
         measuring_time = 1,
@@ -66,10 +66,13 @@ int main()
     // Open receiving pipe with address "1Node"
     radio.openReadingPipe(1, address[0]);
 
+    // Open writing pipe with address "2Node"
+    radio.openWritingPipe(address[1]);
+
     // Initialize display
     display.init();
     display.clear();
-    display.print("Hello");
+    display.print("0.00 s");
 
     // Initialize serial port and gpio
     stdio_init_all();
@@ -91,6 +94,9 @@ int main()
     absolute_time_t startTimestamp;
     uint32_t lastDisplayRefreshTimeMs;
 
+    // Switch to TX mode
+    radio.stopListening();
+
     // Program loop
     while (true)
     {
@@ -102,8 +108,24 @@ int main()
                 lastDisplayRefreshTimeMs = to_ms_since_boot(startTimestamp);
                 display.clear();
                 display.print("0.00 s");
+
+                // Switch to RX mode
                 radio.startListening();
                 currentState = Stopwatch::State::measuring_time;
+            }
+
+            if (!gpio_get(TEST_BTN))
+            {
+                int payload = 0;
+                display.goto_pos(0, 1);
+                if (radio.write(&payload, sizeof(payload)))
+                {
+                    display.print("connected");
+                }
+                else
+                {
+                    display.print("disconnected");
+                }
             }
         }
 
